@@ -1,7 +1,18 @@
 import { autorun, observable, computed } from "mobx"
 
+class Todo {
+    @observable value
+    @observable id
+    @observable complete
+
+    constructor(value) {
+        this.value = value
+        this.id = Date.now()
+        this.complete = false
+    }
+}
 class TodoStore {
-    @observable todos = ["buy milk", "buy eggs"]
+    @observable todos = []
     @observable filter = ""
     @computed get filteredTodos() {
         var matchesFilter = new RegExp(this.filter, "i")
@@ -9,7 +20,7 @@ class TodoStore {
     }
 
     createTodo(value) {
-        this.todos.push(value)
+        this.todos.push(new Todo(value))
     }
 }
 
@@ -19,5 +30,7 @@ export default store
 
 autorun(() => {
     console.log(store.filter)
-    console.log(store.todos[0])
+    if(store.todos && store.todos.length > 0) {
+        console.log(store.todos[0].value)
+    }
 })
