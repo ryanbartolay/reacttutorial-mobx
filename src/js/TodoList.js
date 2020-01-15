@@ -14,10 +14,16 @@ export default class TodoList extends React.Component {
     this.props.store.filter = e.target.value
   }
 
+  toggleTodo = (e, todo) => {
+    console.log(e.target.value)
+    todo.complete = !todo.complete
+  }
+
   render() {
     const { todos, filteredTodos, filter } = this.props.store
     const todoLis = filteredTodos.map(todo => (
-      <li key={todo.id}>{todo.value}</li>
+      <li key={todo.id}>
+        <input type="checkbox" value={todo.complete} onChange={(e) => this.toggleTodo(e, todo)} checked={todo.complete} />{todo.value}</li>
     ))
     return <div>
       <h1>Todos</h1>
