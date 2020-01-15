@@ -16,12 +16,18 @@ class TodoStore {
     @observable filter = ""
     @computed get filteredTodos() {
         var matchesFilter = new RegExp(this.filter, "i")
-        return this.todos.filter(todo => !this.filter || matchesFilter.test(todo))
+        return this.todos.filter(todo => !this.filter || matchesFilter.test(todo.value))
+    }
+
+    clearComplete = () => {
+        const incompleteTodos = this.todos.filter(todo => !todo.complete)
+        this.todos.replace(incompleteTodos)
     }
 
     createTodo(value) {
         this.todos.push(new Todo(value))
     }
+
 }
 
 var store = window.store = new TodoStore
@@ -30,7 +36,7 @@ export default store
 
 autorun(() => {
     console.log(store.filter)
-    if(store.todos && store.todos.length > 0) {
+    if (store.todos && store.todos.length > 0) {
         console.log(store.todos[0].value)
     }
 })
