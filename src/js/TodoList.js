@@ -3,6 +3,13 @@ import { observer } from "mobx-react"
 
 @observer
 export default class TodoList extends React.Component {
+  createNew(e) {
+    if(e.which === 13) {
+      this.props.store.createTodo(e.target.value)
+      e.target.value = ""
+    }
+  }
+
   inputFilter(e) {
     this.props.store.filter = e.target.value
   }
@@ -14,6 +21,7 @@ export default class TodoList extends React.Component {
     ))
     return <div>
       <h1>Todos</h1>
+      <input className="create" onKeyPress={this.createNew.bind(this)} />
       <input className="filter" value={filter} onChange={this.inputFilter.bind(this)} />
       <ul>{todoLis}</ul>
     </div>
