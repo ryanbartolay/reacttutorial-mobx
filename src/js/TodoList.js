@@ -8,12 +8,12 @@ export default class TodoList extends React.Component {
   }
 
   render() {
-    const { todos, filter } = this.props.store
-    const todoLis = todos.map(todo => (
+    const { todos, filteredTodos, filter } = this.props.store
+    const todoLis = filteredTodos.map(todo => (
       <li>{todo}</li>
     ))
     return <div>
-      <h1>{filter}</h1>
+      <h1>Todos</h1>
       <input className="filter" value={filter} onChange={this.inputFilter.bind(this)} />
       <ul>{todoLis}</ul>
     </div>
